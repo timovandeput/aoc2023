@@ -1,61 +1,12 @@
-import 'package:args/args.dart';
+import 'dart:io';
 
-const String version = '0.0.1';
+import 'package:aoc2023/calibration.dart';
 
-ArgParser buildParser() {
-  return ArgParser()
-    ..addFlag(
-      'help',
-      abbr: 'h',
-      negatable: false,
-      help: 'Print this usage information.',
-    )
-    ..addFlag(
-      'verbose',
-      abbr: 'v',
-      negatable: false,
-      help: 'Show additional command output.',
-    )
-    ..addFlag(
-      'version',
-      negatable: false,
-      help: 'Print the tool version.',
-    );
-}
-
-void printUsage(ArgParser argParser) {
-  print('Usage: dart aoc2023.dart <flags> [arguments]');
-  print(argParser.usage);
-}
-
-void main(List<String> arguments) {
-  final ArgParser argParser = buildParser();
-  try {
-    final ArgResults results = argParser.parse(arguments);
-    bool verbose = false;
-
-    // Process the parsed arguments.
-    if (results.wasParsed('help')) {
-      printUsage(argParser);
-      return;
-    }
-    if (results.wasParsed('version')) {
-      print('aoc2023 version: $version');
-      return;
-    }
-    if (results.wasParsed('verbose')) {
-      verbose = true;
-    }
-
-    // Act on the arguments provided.
-    print('Positional arguments: ${results.rest}');
-    if (verbose) {
-      print('[VERBOSE] All arguments: ${results.arguments}');
-    }
-  } on FormatException catch (e) {
-    // Print usage information if an invalid argument was provided.
-    print(e.message);
-    print('');
-    printUsage(argParser);
-  }
+void main() {
+  final file = File('assets/day1/input1.txt');
+  final sum = file
+      .readAsLinesSync()
+      .map((line) => Calibration(line).value)
+      .reduce((prev, next) => prev + next);
+  print('Calibration value: $sum');
 }
