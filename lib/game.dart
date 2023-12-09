@@ -5,10 +5,19 @@ class Game {
 
   Game({required this.maxRed, required this.maxGreen, required this.maxBlue});
 
+  /// Plays a game with the given [text], formatted as hands separated by
+  /// semicolons. E.g. "3 blue, 4 red; 1 green, 2 red".
+  void play(String text) {
+    final split = text.split(';');
+    for (final handText in split) {
+      grab(Hand.parse(handText));
+    }
+  }
+
   void grab(Hand grab) {
     if (grab.red > maxRed || grab.green > maxGreen || grab.blue > maxBlue) {
       throw ArgumentError(
-          'You cannot grab more than the maximum amount of balls');
+          'You cannot grab more than the maximum number of balls');
     }
   }
 }

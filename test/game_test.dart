@@ -23,6 +23,18 @@ void main() {
       expect(() => game.grab(Hand(blue: max + 1)), throwsArgumentError);
     });
 
+    test('plays from text', () {
+      const max = 7;
+      final game = Game(maxRed: max, maxGreen: max, maxBlue: max);
+
+      expect(
+        () => game.play('$max red, $max green, $max blue'),
+        returnsNormally,
+      );
+      expect(() => game.play('$max red'), returnsNormally);
+      expect(() => game.play('999 red'), throwsArgumentError);
+    });
+
     group('$Hand', () {
       test('parses empty hand', () {
         expect(Hand.parse(''), equals(Hand()));
