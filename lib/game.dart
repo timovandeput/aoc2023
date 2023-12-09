@@ -1,9 +1,16 @@
+import 'dart:math';
+
 class Game {
   final int maxRed;
   final int maxGreen;
   final int maxBlue;
+  int _red = 0;
+  int _green = 0;
+  int _blue = 0;
 
   Game({required this.maxRed, required this.maxGreen, required this.maxBlue});
+
+  int get power => _red * _green * _blue;
 
   /// Plays a game with the given [text], formatted as hands separated by
   /// semicolons. E.g. "3 blue, 4 red; 1 green, 2 red".
@@ -14,11 +21,14 @@ class Game {
     }
   }
 
-  void grab(Hand grab) {
-    if (grab.red > maxRed || grab.green > maxGreen || grab.blue > maxBlue) {
+  void grab(Hand hand) {
+    if (hand.red > maxRed || hand.green > maxGreen || hand.blue > maxBlue) {
       throw ArgumentError(
           'You cannot grab more than the maximum number of balls');
     }
+    _red = max(_red, hand.red);
+    _green = max(_green, hand.green);
+    _blue = max(_blue, hand.blue);
   }
 }
 

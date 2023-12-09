@@ -14,6 +14,16 @@ void main() {
       expect(() => game.grab(Hand()), returnsNormally);
     });
 
+    test('calculates the power of a game', () {
+      const max = 99;
+      const red = 2, green = 3, blue = 4;
+      final game = Game(maxRed: max, maxGreen: max, maxBlue: max);
+
+      game.grab(Hand(red: red, green: green, blue: blue));
+
+      expect(game.power, equals(red * green * blue));
+    });
+
     test('throws on grabbing excess balls', () {
       const max = 7;
       final game = Game(maxRed: max, maxGreen: max, maxBlue: max);
