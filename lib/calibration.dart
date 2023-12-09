@@ -3,5 +3,9 @@ class Calibration {
 
   final String text;
 
-  int get value => int.parse(text);
+  int get value {
+    final notDigit = RegExp(r'\D+');
+    final digits = text.replaceAll(notDigit, '');
+    return int.parse(digits[0] + digits[digits.length - 1]);
+  }
 }
